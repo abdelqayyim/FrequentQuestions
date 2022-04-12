@@ -239,6 +239,9 @@ body{
     align-items: flex-end;
     justify-content: end;
 }
+ul{
+    margin-left: 1vw;
+}
 li{
     display: list-item;
     list-style-type: circle;
@@ -262,3 +265,10 @@ li{
     margin-left: 5px;
     width: 100%;
 }
+
+li.L0, li.L1, li.L2, li.L3,
+li.L5, li.L4,li.L6, li.L7, li.L8 {
+    list-style-type: decimal !important;
+    background-color: lightblue !important;
+}
+

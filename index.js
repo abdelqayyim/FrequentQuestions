@@ -85,8 +85,8 @@ function addCode(){
     let noteSection = document.querySelector(".note-ul");
     let note = document.createElement("div");
     note.classList.add("bulletPoint-list");
-    note.innerHTML = `<pre class="prettyprint linenums code-exerpt" contenteditable >
-    Insert Code
+    note.innerHTML = `<pre class="prettyprint linenums prettyprinted code-exerpt" contenteditable >
+Insert Code
                     </pre>`;
     noteSection.appendChild(note);
 }
