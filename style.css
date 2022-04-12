@@ -1,0 +1,264 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 1000px;
+}
+.languages{
+    background-color: lightblue;
+    height: 15vw;
+    display: flex;
+    flex-direction: column;
+    transition-timing-function: ease-in;
+    transition-duration: 0.5s;
+}
+.title{
+    width: 100%;
+    background-color: lightcoral;
+    height: 7vw;
+    font-family:"Merriweather";
+    display: flex;
+    flex-direction: row;
+    font-weight: bolder;
+    font-size: 5vw;
+    align-items: center;
+    justify-content: center;
+}
+.options{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1vw;
+}
+.btn{
+    position: relative;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1.5vw;
+    font-family:'Bitter', sans-serif;
+    font-weight: bolder;
+    padding: 5px 10px;
+    border: none;
+    background-color:#3898ec;
+    color: white;
+    transition-timing-function: ease-out;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+.btn:hover{
+    transform: scale(1.1);
+}
+.dropInfo{
+    position: absolute;
+    background-color: lightpink;
+    width: 15vw;
+    height: 6vw;
+    font-size: 1.5vw;
+    font-weight: bolder;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    right: 50%;
+    transform: translateX(50%);
+    top: 1vw;
+    opacity: 0;
+    transition-timing-function: ease-in;
+    transition-duration: 0.2s;
+    pointer-events: none;
+}
+.dropInfo li{
+    list-style: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.dropInfo li:hover{
+    background-color: antiquewhite;
+}
+.drop{
+    opacity: 1;
+    top: 2.5vw;
+    pointer-events: all;
+}
+.notes-section{
+    width: 98%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.note{
+    border: 1px solid black;
+    width: 20vw;
+    height: 10vw;
+    font-size: 1.5vw;
+    margin: 2vw 2vw;
+    padding: 4px;
+    border-radius: 5px;
+    transition-timing-function: ease-in;
+    transition-duration: 0.1s;
+}
+.note:hover{
+    transform: scale(1.1);
+}
+.note-title{
+    font-size: 1.7vw;
+    font-weight: bolder;
+    font-family: "Merriweather";
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+}
+.note-description{
+    font-size: 1.3vw;
+    font-family:'Times New Roman', Times, serif;
+}
+.hidden{
+    display: none;
+}
+.clicked{
+    margin-top: 2vw;
+}
+.note-detail{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0); 
+    transition: 0.4s ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    width: 45vw;
+    height: 50vw;
+    max-width: 80%;
+    overflow: scroll;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.note-detail.active{
+    transform: translate(-50%, -50%) scale(1);
+}
+.note-header{
+    display: flex;
+    flex: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1vw;
+    font-weight: bolder;
+}
+.add-btn{
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 50%;
+    background-color: lightblue;
+    width: 2vw;
+    height: 2vw;
+    font-size: 1.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1vw;
+}
+.close-btn{
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 50%;
+    background-color: lightblue;
+    width: 2vw;
+    height: 2vw;
+    font-size: 1.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1vw;
+}
+/* this is how you hide the scrollbar */
+.note-detail::-webkit-scrollbar{ 
+    display: none;
+}.text-section::-webkit-scrollbar{ 
+    display: none;
+}
+.close{
+    z-index: 10;
+    right: 50%;
+    top: 0;
+    position: sticky;
+    font-size: 2vw;
+    cursor: pointer;
+}
+.overlay.active{
+    position: fixed;
+    z-index: 2;
+    opacity: 0.9;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: grey;
+    transition-timing-function: ease-in;
+    transition-duration: 0.6s;
+}
+.text-section{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+#text{
+    width: 100%;
+    resize: none;
+    height: 90%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.3vw;
+    padding: 1vw;
+    outline: none;
+    border: 1px solid black;
+}
+.bottom-section{
+    position: sticky;
+    background-color: lightblue;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: end;
+}
+li{
+    display: list-item;
+    list-style-type: circle;
+    margin-left: 10px;
+}
+.bulletPoint-list{
+    margin-bottom: 2px;
+}
+.bullet-point{
+    display: inline-block;
+    width: 100%;
+    background-color: lightblue;
+    outline: none;
+}
+.bullet-point:hover{
+    cursor:text;
+}
+.code-exerpt{
+    position: relative;
+    margin-top: 2px;
+    margin-left: 5px;
+    width: 100%;
+}
