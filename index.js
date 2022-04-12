@@ -6,6 +6,9 @@
 //TASK: create a foreach look to write the notes when the language is pressed
 let dropDown = document.querySelector(".dropInfo");
 let dropArrow = document.querySelector(".btn-dropdown");
+let addLanguageOption = document.querySelector(".add-languageOption");
+let deleteLanguageOption = document.querySelector(".delete-languegOption");
+let addLanguagePopUp = document.querySelector(".add-language");
 let arrowDown = document.querySelector("i");
 let languages = document.querySelectorAll(".lang");
 let menu = document.querySelector(".languages");
@@ -32,8 +35,8 @@ closeBtn.addEventListener("click", function (e) {
 })
 
 dropArrow.addEventListener("click", function (e) {
-    e.preventDefault();
     dropDown.classList.toggle("drop");
+    
     if (arrowDown.classList[1] === "fa-angle-down") {
         arrowDown.classList.remove("fa-angle-down");
         arrowDown.classList.add("fa-angle-up");
@@ -43,6 +46,14 @@ dropArrow.addEventListener("click", function (e) {
         arrowDown.classList.remove("fa-angle-up");
     }
 })
+function closePopUps(e) {
+    if (e.target.classList[0] != 'add-language') {
+        overlay.classList.remove("active");
+        addLanguagePopUp.classList.add("hidden");
+        document.removeEventListener("click", closePopUps);
+    }
+}
+addLanguageOption.addEventListener("click", showAddLanguage);
 
 languages.forEach((lang) => { 
     lang.addEventListener("click", (e) => {
@@ -89,4 +100,10 @@ function addCode(){
 Insert Code
                     </pre>`;
     noteSection.appendChild(note);
+}
+function showAddLanguage() {
+    overlay.classList.add("active");
+    addLanguagePopUp.classList.remove("hidden");
+    setTimeout(() => {document.addEventListener("click",closePopUps)},500)
+    
 }

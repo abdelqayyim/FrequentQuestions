@@ -271,4 +271,42 @@ li.L5, li.L4,li.L6, li.L7, li.L8 {
     list-style-type: decimal !important;
     background-color: lightblue !important;
 }
+.add-language{
+    background-color: black;
+    position: fixed;
+    height: 10vw;
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    z-index: 10;
+}
+.add-language.hidden{
+    display: none;
+}
+.add-languageInput{
+    height: 4vw;
+    width: 10vw;
+    font-size: 2vw;
+    text-align: center;
+    border-radius: 10px;
+    font-family:'Bitter', sans-serif;
+    color: white;
+    outline: none;
+    border: none;
+    background-color: #7f7f7f;
+}
+::placeholder{
+    color: white;
+}
+.add-languageBtn{
+    font-size: 1.5vw;
+    width: 5vw;
+    margin-top: 2vw;
+}
 

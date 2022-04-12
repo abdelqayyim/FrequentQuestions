@@ -25,10 +25,10 @@
             <button class="btn lang C#">C#</button>
             <button class="btn lang Java">Java</button>
             <button class="btn lang C">C</button>
-            <button class="btn lang btn-dropdown"> <i class="fa-solid fa-angle-down"></i> 
+            <button class="btn btn-dropdown"> <i class="fa-solid fa-angle-down"></i> 
                 <ul class="dropInfo">
-                    <li>Add Language</li>
-                    <li>Delete Language</li>
+                    <li class="add-languageOption">Add Language</li>
+                    <li class="delete-languegOption">Delete Language</li>
                 </ul>
             </button>
             
@@ -74,6 +74,11 @@ def main():
             <div class="btn addCode">+CODE</div>
             <div class="btn save">POST</div>
         </div>
+    </div>
+
+    <div class="hidden add-language">
+        <input type="text" placeholder="Name" class="add-languageInput" autofocus>
+        <button class="add-languageBtn btn">ADD</button>
     </div>
 
 
