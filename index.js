@@ -23,10 +23,13 @@ let arrowDown = document.querySelector("i");
 let languages = document.querySelectorAll(".lang");
 let menu = document.querySelector(".languages");
 let body = document.querySelector("body");
+
 let notesSection = document.querySelector(".notes-section");
 let notes = document.querySelectorAll(".note");
 let noteDetail = document.querySelector(".note-detail");
 let closeBtn = document.querySelector(".close-btn");
+let editNoteBtn = document.querySelectorAll(".fa-edit");
+
 let overlay = document.querySelector(".overlay");
 let lightOverlay = document.querySelector(".light-overlay");
 let postBtn = document.querySelector(".save");
@@ -153,16 +156,20 @@ function addNote(){
     let noteSection = document.querySelector(".note-ul");
     let note = document.createElement("li");
     note.classList.add("bulletPoint-list");
-    note.innerHTML = `<p class="bullet-point"<span role="textbox" contenteditable> Add Note</span></p>`;
+    note.innerHTML = `<p class="bullet-point"<span role="textbox" contenteditable><i class="fa fa-edit"></i> Add Note</span></p>`;
     noteSection.appendChild(note);
+    editNoteBtn = document.querySelectorAll(".fa-edit");
+    editNoteBtn.forEach((btn) => btn.addEventListener("click", editNote));
 }
 function addCode(){
     let noteSection = document.querySelector(".note-ul");
     let note = document.createElement("div");
-    note.classList.add("bulletPoint-list");
-    note.innerHTML = `<pre class="prettyprint linenums prettyprinted code-exerpt" contenteditable >
-Insert Code
-                    </pre>`;
+    note.classList.add("code-toolbar");
+    note.innerHTML = `<pre class="line-numbers language-py">
+    <code class="language-py">def main():
+        print("hello World")
+    </code>
+</pre>`;
     noteSection.appendChild(note);
 }
 function showAddLanguage() {
@@ -176,4 +183,11 @@ function showDeleteLanguage() {
     lightOverlay.classList.remove("active");
     deleteLanguagePopUp.classList.remove("hidden");
     setTimeout(() => {document.addEventListener("click",closePopUps)},500)
+}
+
+
+function editNote(event) {
+    // let parent = event.target.closest(".prettyprint").innerText;
+
+    console.log(event.target);
 }

@@ -258,9 +258,9 @@ body{
     align-items: flex-end;
     justify-content: end;
 }
-ul{
+/* ul{
     margin-left: 1vw;
-}
+} */
 li{
     display: list-item;
     list-style-type: circle;
@@ -285,11 +285,6 @@ li{
     width: 100%;
 }
 
-li.L0, li.L1, li.L2, li.L3,
-li.L5, li.L4,li.L6, li.L7, li.L8 {
-    list-style-type: decimal !important;
-    background-color: lightblue !important;
-}
 .add-language{
     background-color: black;
     position: fixed;
@@ -366,4 +361,28 @@ li.L5, li.L4,li.L6, li.L7, li.L8 {
     width: 5vw;
     margin-top: 2vw;
 }
-
+.fa-edit{
+    position: absolute;
+    color: green;
+    right: 0;
+    margin-right: 10px;
+    opacity: 0;
+}
+/* pre:hover .fa-edit{
+    opacity: 1;
+    cursor: pointer;
+} */
+.bulletPoint-list:hover .fa-edit{
+    opacity: 1;
+    cursor: pointer;
+    z-index: 102;
+}
+.code-thingy{
+    width: 100%;
+}
+.div{
+    position: fixed;
+    background-color: white;
+    width: 45vw;
+    height: 50vw;
+}
