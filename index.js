@@ -1,6 +1,8 @@
-// document.onload{
+// import Prism from prismjs;
+// const Prism = require("prismjs");
 
-// }
+// const Prism = require("./prism-dark");
+
 //TODO: When the languages are added, add them in the data right away
 //TASK: Create an add/delete button for the languages (Don't forget to delete from database too)
 //TASK: create a foreach look to write the notes when the language is pressed
@@ -163,14 +165,26 @@ function addNote(){
 }
 function addCode(){
     let noteSection = document.querySelector(".note-ul");
-    let note = document.createElement("div");
-    note.classList.add("code-toolbar");
-    note.innerHTML = `<pre class="line-numbers language-py">
-    <code class="language-py">def main():
-        print("hello World")
-    </code>
+//     let note = document.createElement("div");
+//     // note.classList.add("code-toolbar");
+//     note.innerHTML = `<pre class=" language-py">
+//     <code class="language-py">def main():
+//         print("hello World")
+//     </code>
+// </pre>`;
+    let newNote = noteSection.childNodes[1];
+    let newD = document.createElement("div");
+    newD.innerHTML = `<pre class="line-numbers">
+    <code class="language-python" contenteditable>def main():
+        print("hello man"</code>
 </pre>`;
-    noteSection.appendChild(note);
+    console.log(newD.innerHTML);
+    // Prism.highlight(note.innerHTML, Prism.languages.python, "python");
+    noteSection.appendChild(newD);
+    Prism.highlightAll();
+    // document.querySelectorAll("code")[1].classList.add("language-py");
+    // document.querySelectorAll("pre")[1].classList.add("line-numbers");
+    // console.log(document.querySelectorAll("pre")[1]);
 }
 function showAddLanguage() {
     overlay.classList.add("active");
