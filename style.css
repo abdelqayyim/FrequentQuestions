@@ -2,6 +2,7 @@
     margin: 0;
     box-sizing: border-box;
     padding: 0;
+    color: white;
 }
 body{
     height: 100vh;
@@ -10,9 +11,11 @@ body{
     justify-content: center;
     align-items: center;
     min-width: 1000px;
+    background-color: black;
 }
 .languages{
-    background-color: lightblue;
+    /* background-color: lightblue; */
+    background-color: black;
     height: 15vw;
     display: flex;
     flex-direction: column;
@@ -21,7 +24,6 @@ body{
 }
 .title{
     width: 100%;
-    background-color: lightcoral;
     height: 7vw;
     font-family:"Merriweather";
     display: flex;
@@ -58,7 +60,7 @@ body{
 }
 .dropInfo{
     position: absolute;
-    background-color: lightpink;
+    background-color: black;
     width: 15vw;
     height: 6vw;
     font-size: 1.5vw;
@@ -77,13 +79,16 @@ body{
 .dropInfo li{
     list-style: none;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0;
 }
 .dropInfo li:hover{
-    background-color: antiquewhite;
+    background-color: #7f7f7f;
+    transform: scale(1.05);
 }
 .drop{
     opacity: 1;
@@ -98,6 +103,7 @@ body{
     justify-content: space-evenly;
 }
 .note{
+    background-color: #7f7f7f;
     border: 1px solid black;
     width: 20vw;
     height: 10vw;
@@ -138,8 +144,8 @@ body{
     transition: 0.4s ease-in-out;
     border: 1px solid black;
     border-radius: 10px;
-    z-index: 10;
-    background-color: white;
+    z-index: 100;
+    background-color: black;
     width: 45vw;
     height: 50vw;
     max-width: 80%;
@@ -165,7 +171,7 @@ body{
     cursor: pointer;
     z-index: 100;
     border-radius: 50%;
-    background-color: lightblue;
+    background-color: #7f7f7f;
     width: 2vw;
     height: 2vw;
     font-size: 1.5vw;
@@ -179,7 +185,7 @@ body{
     cursor: pointer;
     z-index: 100;
     border-radius: 50%;
-    background-color: lightblue;
+    background-color: #7f7f7f;
     width: 2vw;
     height: 2vw;
     font-size: 1.5vw;
@@ -205,7 +211,7 @@ body{
 }
 .overlay.active{
     position: fixed;
-    z-index: 2;
+    z-index: 50;
     opacity: 0.9;
     top: 0;
     left: 0;
@@ -214,6 +220,19 @@ body{
     background-color: grey;
     transition-timing-function: ease-in;
     transition-duration: 0.6s;
+}
+.light-overlay.active{
+    z-index: 2;
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+}
+.btn-dropdown{
+    z-index: 10;
 }
 .text-section{
     width: 100%;
@@ -232,7 +251,7 @@ body{
 }
 .bottom-section{
     position: sticky;
-    background-color: lightblue;
+    background-color: black;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -274,8 +293,8 @@ li.L5, li.L4,li.L6, li.L7, li.L8 {
 .add-language{
     background-color: black;
     position: fixed;
-    height: 10vw;
-    width: 15vw;
+    height: 15vw;
+    width: 20vw;
     display: flex;
     flex-direction: column;
     top: 50%;
@@ -284,7 +303,7 @@ li.L5, li.L4,li.L6, li.L7, li.L8 {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    z-index: 10;
+    z-index: 100;
 }
 .add-language.hidden{
     display: none;
@@ -305,6 +324,44 @@ li.L5, li.L4,li.L6, li.L7, li.L8 {
     color: white;
 }
 .add-languageBtn{
+    font-size: 1.5vw;
+    width: 5vw;
+    margin-top: 2vw;
+}
+.delete-language{
+    background-color: black;
+    position: fixed;
+    height: 15vw;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    z-index: 100;
+}
+.delete-language.hidden{
+    display: none;
+}
+.delete-languageInput{
+    height: 4vw;
+    width: 10vw;
+    font-size: 2vw;
+    text-align: center;
+    border-radius: 10px;
+    font-family:'Bitter', sans-serif;
+    color: white;
+    outline: none;
+    border: none;
+    background-color: #7f7f7f;
+}
+::placeholder{
+    color: white;
+}
+.delete-languageBtn{
     font-size: 1.5vw;
     width: 5vw;
     margin-top: 2vw;
