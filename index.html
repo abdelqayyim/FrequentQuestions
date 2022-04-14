@@ -12,6 +12,7 @@
     <title>Frequent Questions</title>
 </head>
 <body>
+    <!-- ------------------------------------- PART 1 ------------------------------------------- -->
 
     <div class="languages">
         <div class="title">
@@ -31,22 +32,26 @@
                     <li class="delete-languagegOption">Delete Language</li>
                 </ul>
             </button>
-            
-            
         </div>
+        <button class="hidden btn addNoteBtn">
+            ADD NOTE
+        </button>
     </div>
 
+    <!-- ------------------------------------- PART 2 ------------------------------------------- -->
 
     <div class="notes-section hidden">
         <div class="note">
             <div class="note-title">
                 This is the notes title
             </div>
-            <div>
+            <div class="note-description">
                 Hello this is the note summary
             </div>
         </div>
     </div>
+
+    <!-- ------------------------------------- PART 3 ------------------------------------------- -->
 
     <div class="note-detail">
         <div class="note-header">
@@ -76,6 +81,8 @@
         </div>
     </div>
 
+
+    <!-- ------------------------------------- PART 4 ------------------------------------------- -->
     <div class="hidden add-language">
         <input type="text" placeholder="Name" class="add-languageInput" autofocus>
         <button class="add-languageBtn btn">ADD</button>
@@ -84,12 +91,13 @@
         <input type="text" placeholder="Name" class="delete-languageInput" autofocus>
         <button class="delete-languageBtn btn">DELETE</button>
     </div>
+    <div class="hidden create-note">
+        <input type="text" placeholder="TITLE" class="titleInput">
+        <textarea name="create-note" id="" cols="30" rows="10" class="descriptionInput" placeholder="DESCRIPTION"></textarea>
+        <button class="btn createNoteBtn">CREATE</button>
+    </div>
 
-
-
-
-
-
+    <!-- ------------------------------------- PART 5 ------------------------------------------- -->
     <div class="overlay">
     <div class="light-overlay">
     <!-- Add class active -->
