@@ -2,6 +2,7 @@ let body = document.querySelector("body");
 let languagePicked; //this is a global variable that keeps track of the language the user is working on
 // ----------------------------------- PART 1 -----------------------------
 let menu = document.querySelector(".languages");
+let webSiteTitle = document.querySelector(".title");
 let options = document.querySelector(".options");
 let languages = document.querySelectorAll(".lang"); //the languages buttons
 let dropArrow = document.querySelector(".btn-dropdown"); //the options button (add and delete language)
@@ -21,12 +22,13 @@ languages.forEach((lang) => { lang.addEventListener("click", (e) => { showNotes(
 dropArrow.addEventListener("click", dropOptions);
 addNoteButton.addEventListener("click", openNotePopUp);
 newNoteBtn.addEventListener("click", (e) => { createNewNote(e, languagePicked) });
+webSiteTitle.addEventListener("click", ()=>{location.reload()})
 // ----------------------------------- PART 2 -----------------------------
 let notesSection = document.querySelector(".notes-section"); //this is the section where the notes are
 let notes = document.querySelectorAll(".note"); //the notes in the note section
 
 //           ---------- FUNCTION CALLS -----------------------
-notes.forEach((note) => note.addEventListener("click", function (e) { showNoteDetail(e, languagePicked); }));
+notes.forEach((note) => note.addEventListener("click", function (e) { showNoteDetail(e, languagePicked, note.classList[1]) }));
 // ----------------------------------- PART 3 -----------------------------
 let noteDetail = document.querySelector(".note-detail"); //this is the pop up after you press on a note
 let noteTitle = document.querySelector(".note-title");
@@ -34,11 +36,14 @@ let addNoteBtn = document.querySelector(".addNote");
 let addCodeBtn = document.querySelector(".addCode");
 let postBtn = document.querySelector(".save");
 let closeBtn = document.querySelector(".close-btn");
+let currentTitle = document.querySelector(".popUp-title");
+let deleteButton = document.querySelector(".delete-btn");
 
 //           ---------- FUNCTION CALLS -----------------------
 addNoteBtn.addEventListener("click", addNote);
 addCodeBtn.addEventListener("click", function (e) { addCode(e, languagePicked)});
-closeBtn.addEventListener("click", closeBtnFunction)
+closeBtn.addEventListener("click", closeBtnFunction);
+deleteButton.addEventListener("click", (e) => { deleteNote(e, languagePicked, currentTitle.innerText) });
 
 // ----------------------------------- PART 4 -----------------------------
 let addLanguagePopUp = document.querySelector(".add-language"); //this is the div
@@ -73,6 +78,7 @@ function closePopUps(e) {
         document.removeEventListener("click", closePopUps);
     }
 }
+
 function closeBtnFunction() {
     noteDetail.classList.remove("active");
     overlay.classList.remove("active");
@@ -140,8 +146,9 @@ function showDeleteLanguage() {
     deleteLanguagePopUp.classList.remove("hidden");
     setTimeout(() => {document.addEventListener("click",closePopUps)},500)
 }
-function showNoteDetail(event, language) { //This is the note detail pop up, to edit
-    console.log("Pressed");
+function showNoteDetail(event, language, title) { //This is the note detail pop up, to edit
+    currentTitle.innerText = title;
+    console.log(title);
     noteDetail.classList.add("active");
     overlay.classList.add("active");
 }
@@ -203,6 +210,7 @@ function createNewNote(event, language) {
     if (newNoteTitle.value.trim() != "") {//if the title is  not empty
         let div = document.createElement("div");
         div.classList.add("note");
+        div.classList.add(`note-${notesSection.childNodes.length}`);//make sure each title is unique
         div.innerHTML = `<div class="note-title">
         ${newNoteTitle.value.trim()}
     </div>
@@ -214,6 +222,15 @@ function createNewNote(event, language) {
         okay[language] = {};
         okay[language]["Title"] = newNoteTitle.value;
         okay[language]["Description"] = newNoteDescription.value;
-        console.log(okay);
+        notes = document.querySelectorAll(".note");
+        notes.forEach((note) => note.addEventListener("click", function (e) { showNoteDetail(e, languagePicked, note.classList[1]); }));
+
+        //TASK: send post request to server as well
     }
+}
+function deleteNote(event, language, number) {
+    let noteToDelete = document.querySelector(`.${number}`);
+    notesSection.removeChild(noteToDelete);
+    closeBtnFunction();
+    //TASK: send delete request to server as well
 }
