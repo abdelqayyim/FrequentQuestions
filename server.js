@@ -25,6 +25,12 @@ app.use((req,_,next)=> {
     next();
 });
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Origin');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  next();
+})
 //Mount the fridge router to the path /fridges
 //All requests starting with /fridges will be forwarded to this router
 app.use("/languages", languagesRouter);
