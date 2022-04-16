@@ -420,6 +420,30 @@ li{
     width: 45vw;
     height: 50vw;
 }
+.error-poUp{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    font-size: 2vw;
+    padding: 2vw;
+    max-width: 30vw;
+    display: flex;
+    border-radius: 5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: auto;
+    z-index: 120;
+    background-color: #eb3c3c;
+    text-align: center;
+    transition-timing-function: ease-out; 
+    transition-duration: 1s;
+}
+.error-poUp.hidden{
+    display: none;
+    transform: scale(0);
+}
 /* ---------------------------------- PART 5 ------------------------------------ */
 .overlay.active{
     position: fixed;

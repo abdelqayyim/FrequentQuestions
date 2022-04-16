@@ -92,10 +92,6 @@ function populateLanguages(){
             languages = document.querySelectorAll(".lang"); //the languages buttons
             languages.forEach((lang) => { lang.addEventListener("click", (e) => { showNotes(e, lang) }) });
         }
-        else {
-            // console.log(xhttp.responseText);
-            // console.log("HERE");
-        }
        };
     xhttp.open("GET", `http://localhost:8000/languages/`, "true");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -186,8 +182,7 @@ function saveNote(event, language) {
             closePopUps(undefined);
         }
         else {
-            // console.log(xhttp.responseText);
-            // console.log(xhttp.status);
+            showError(xhttp.responseText);
         }
     };
     xhttp.open("PUT", `http://localhost:8000/languages/${language.toLowerCase()}/updateNote`, "true");
@@ -241,8 +236,7 @@ function showNotes(event, language) {
             }));
         }
         else {
-            // console.log(xhttp.responseText);
-            // console.log("DELETING LANGUAGE FAILED");
+            showError(xhttp.responseText);
         }
     }
     xhttp.open("GET", `http://localhost:8000/languages/${languagePicked.toLowerCase()}/getNotes`, "true");
@@ -288,7 +282,7 @@ function showNoteDetail(event, language, title) { //This is the note detail pop 
             Prism.highlightAll();
         }
         else {
-            // console.log(xhttp.responseText);
+            showError(xhttp.responseText);
         }
     };
     xhttp.open("POST", `http://localhost:8000/languages/${language.toLowerCase()}/getNote`, "true");
@@ -325,8 +319,7 @@ function addLanguageFunction(event) {
                 }
             }
             else {
-                // console.log(xhttp.responseText);
-                // console.log("HERE");
+                showError(xhttp.responseText);
             }
         };
         xhttp.open("POST", `http://localhost:8000/languages/${languageName}`, "true");
@@ -352,8 +345,7 @@ function deleteLanguageFunction(event){
                     location.reload();
                 }
                 else {
-                    // console.log(xhttp.responseText);
-                    // console.log("DELETING LANGUAGE FAILED");
+                    showError(xhttp.responseText);
                 }
         };
         xhttp.open("DELETE", `http://localhost:8000/languages/${languageName.toLowerCase()}`, "true");
@@ -407,7 +399,7 @@ function createNewNote(event, language) {
                 // location.reload();
             }
             else {
-                // console.log(xhttp.responseText);
+                showError(xhttp.responseText);
             }
         };
         xhttp.open("POST", `http://localhost:8000/languages/${language.toLowerCase()}/newNote`, "true");
@@ -433,15 +425,25 @@ function deleteNote(event, language, title) {
             closePopUps(undefined);
         }
         else {
-            // console.log(xhttp.responseText);
+            showError(xhttp.responseText);
         }
     };
     xhttp.open("DELETE", `http://localhost:8000/languages/${language.toLowerCase()}/deleteNote`, "true");
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(note));
 }
+function showError(message) {
+    console.log("Error has be made");
+    let errorPopUp = document.querySelector(".error-poUp");
+    let erroText = document.querySelector(".error-text");
+
+    erroText.innerText = message;
+    errorPopUp.classList.remove("hidden");
+    
+    setTimeout(() => { errorPopUp.classList.add("hidden"); }, 2000);
 
 
-
+}
 
 //TASK: Add Pop For when when a new Note is added or when there is an error
+//Try to implement a search button too
