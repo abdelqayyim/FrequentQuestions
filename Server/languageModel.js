@@ -8,6 +8,7 @@ let languageSchema = Schema({
     },
     notes: [{
         type: {
+            id:Number,
             title: { type: String },
             description: { type: String },
             noteDetail: { type: String }

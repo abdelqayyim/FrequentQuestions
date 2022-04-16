@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const path = require('path');
+var bodyParser = require('body-parser');
+var cors = require('cors');
 const config = require('./Server/config.js');
 let Language = require("./Server/languageModel");
 
@@ -24,6 +26,12 @@ app.use((req,_,next)=> {
     }
     next();
 });
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(bodyParser.json());
+app.use(cors());
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');

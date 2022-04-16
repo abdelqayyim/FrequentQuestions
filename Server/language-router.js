@@ -16,7 +16,8 @@ router.get("/", (req,res) => {
         return;
     })
 })
-router.get("/:language/getNote", (req, res) => {//in the body pass in the note's title, return the note
+router.post("/:language/getNote", (req, res) => {//in the body pass in the note's title, return the note
+    console.log(req.body);
     if (!Object.keys(req.body).includes("title")) {
         res.status(400).send(`You need to pass in the title of the note you want to GET`);
         return;
@@ -108,11 +109,11 @@ router.post("/:language/newNote",checkNoteBody, (req, res) => { //initial creati
 function checkNoteBody(req, res, next) {
     let lang = req.params.language;
     console.log(`The passed in language is ${lang}`);
-    let permittedKeys = ["title", "description", "noteDetail"];
+    let permittedKeys = ["title", "description", "noteDetail", "_id"];
     let passedKeys = Object.keys(req.body);
 
     for (key of passedKeys) {
-        if (!permittedKeys.includes(key) || !passedKeys.includes("title") ||!passedKeys.includes("description") ||!passedKeys.includes("noteDetail")) {
+        if (!permittedKeys.includes(key) || !passedKeys.includes("title") ||!passedKeys.includes("description") ||!passedKeys.includes("noteDetail") ||!passedKeys.includes("_id")) {
             res.status(404).send(`There is an error in the body, it should be in the format {title: String, description: String, noteDetail:String}`);
             return;
         }
@@ -125,6 +126,7 @@ router.put("/:language/updateNote", checkNoteBody, (req, res) => {
     let newTitle = req.body.title;
     let newDescription = req.body.description;
     let newNoteDetail = req.body.noteDetail;
+    let newNoteId = req.body._id;
     Language.findOne({ name: lang }, function(error,result){
         if (error) { res.status(404).send(error.message); return; }
         if (result == null) {
@@ -132,7 +134,7 @@ router.put("/:language/updateNote", checkNoteBody, (req, res) => {
             return;
         }
         for (note of result.notes) {
-            if (note.title == newTitle) {
+            if (note._id == newNoteId) {
                 note.title = newTitle;
                 note.description = newDescription;
                 note.noteDetail = newNoteDetail;
@@ -193,7 +195,7 @@ router.delete("/:language/deleteNote", (req, res) => {
             res.status(200).send(resu);
             return;
         })
-        return
+        return;
     })
 })
 

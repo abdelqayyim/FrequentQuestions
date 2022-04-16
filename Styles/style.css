@@ -139,6 +139,7 @@ body{
     border-bottom: 1px solid white;
     margin-bottom: 1vw;
     padding-bottom: 1vw;
+    outline: none;
 }
 .note-description{
     font-size: 1.3vw;
@@ -163,7 +164,7 @@ body{
     z-index: 100;
     background-color: black;
     width: 45vw;
-    height: 50vw;
+    height: calc(100vh - 2vw);
     max-width: 80%;
     overflow: scroll;
     padding: 5px;
@@ -264,7 +265,7 @@ li{
     width: 100%;
     background-color: #7f7f7f;
     outline: none;
-    font-size: 1.2vw;
+    font-size: 2vw;
 }
 .bullet-point:hover{
     cursor:text;
@@ -441,4 +442,7 @@ li{
     right: 0;
     bottom: 0;
     background-color: white;
+}
+code{
+    outline: none;
 }
