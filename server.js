@@ -4,13 +4,13 @@ const app = express();
 const path = require('path');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-const config = require('./config.js');
-let Language = require("./languageModel");
+const config = require('./Server/config.js');
+let Language = require("./Server/languageModel");
 
 const PORT = process.env.PORT || 8000;
 
 
-const languagesRouter = require("./language-router");
+const languagesRouter = require("./Server/language-router");
 
 let db;
 app.locals.db = db;
