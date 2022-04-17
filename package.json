@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/abdelqayyim/FrequentQuestions#readme",
   "dependencies": {
+    "body-parser": "^1.20.0",
     "express": "^4.17.3",
     "i": "^0.3.7",
     "mongodb": "^4.5.0",
