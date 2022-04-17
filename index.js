@@ -97,6 +97,141 @@ function populateLanguages(){
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
+function addLanguageFunction(event) {
+    event.preventDefault();
+    console.log("I have been pressed");
+    xhttp = new XMLHttpRequest();
+    if (addLanguageInput.value.trim().length !== 0) {
+        let languageName = addLanguageInput.value.trim().toLowerCase();
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) { 
+                let newLanguage = document.createElement("button");
+                newLanguage.classList.add("btn");
+                newLanguage.classList.add("lang");
+                newLanguage.classList.add(`${languageName.toLowerCase().replace(/\s/g, "")}`);
+                newLanguage.innerText = languageName.charAt(0).toUpperCase() + languageName.slice(1);
+                options.insertAdjacentElement("afterbegin", newLanguage);
+
+                //TASK: make input null and close the popUp
+                addLanguageInput.value = "";
+                overlay.classList.remove("active");
+                addLanguagePopUp.classList.add("hidden");
+                // location.reload();
+                languages = document.querySelectorAll(".lang"); //the languages buttons
+                languages.forEach((lang) => { lang.addEventListener("click", (e) => { showNotes(e, lang) }) });
+                for (let l of languages) {
+                    if (l.classList[2] == languageName)
+                        l.click();//simulate a click to show the add notes section right away
+                }
+            }
+            else {
+                showError(xhttp.responseText);
+            }
+        };
+        xhttp.open("POST", `http://localhost:8000/languages/${languageName}`, "true");
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
+    }
+    else { //if it is empty ***no words in the input field***
+        
+    }
+}
+function createNewNote(event, language) {
+    if (newNoteTitle.value.trim() != "") {//if the title is  not empty
+        console.log(`${newNoteTitle.value}-${newNoteDescription.value}`);
+        let note = {"title": newNoteTitle.value.trim(), "description":newNoteDescription.value.trim(), "noteDetail":"", "_id":0}
+
+        //TASK: send post request to server as well
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) { 
+                let div = document.createElement("div");
+                div.classList.add("note");
+                div.classList.add(`note-${notesSection.childNodes.length}`);//make sure each title is unique
+                div.innerHTML = `<div class="note-title">
+                ${newNoteTitle.value.trim()}
+            </div>
+            <div class="note-description">
+                ${newNoteDescription.value.trim()}
+            </div>`;
+                notesSection.insertAdjacentElement("beforeend", div);
+                lightOverlayFunction();//close the popUp
+                okay[language] = {};
+                okay[language]["Title"] = newNoteTitle.value;
+                okay[language]["Description"] = newNoteDescription.value;
+                notes = document.querySelectorAll(".note");
+                notes.forEach((note) => note.addEventListener("click", function (e) {
+                titlePicked = note.childNodes[0].innerText;
+                desriptionPicked = note.childNodes[1].innerText;
+                showNoteDetail(e, languagePicked, note.classList[1]);
+            }));
+            }
+            else {
+                // console.log(xhttp.responseText);
+                showError(xhttp.responseText);
+            }
+        };
+        xhttp.open("POST", `http://localhost:8000/languages/${language.toLowerCase()}/newNote`, "true");
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        console.log(note);
+        xhttp.send(JSON.stringify(note));
+    }
+}
+function addNote(){
+    let noteSection = document.querySelector(".note-ul");
+    let note = document.createElement("li");
+    note.classList.add("bulletPoint-list");
+    note.innerHTML = `<p class="bullet-point"<span role="textbox" contenteditable> Add Note</span></p>`;
+    noteSection.appendChild(note);
+    editNoteBtn = document.querySelectorAll(".fa-edit");
+    editNoteBtn.forEach((btn) => btn.addEventListener("click", editNote));
+}
+function addCode(event, language){
+    let noteSection = document.querySelector(".note-ul");
+    console.log(languagePicked);
+    let newNote = noteSection.childNodes[1];
+    let newD = document.createElement("div");
+    newD.innerHTML = `<pre class="line-numbers">
+    <code class="language-${language}" contenteditable>Add ${languagePicked} Code</code>
+</pre>`;
+    noteSection.appendChild(newD);
+    Prism.highlightAll();
+}
+function saveNote(event, language) {
+    let detail = document.querySelector(".note-ul");
+    let parent = document.querySelector(".note-ul");
+    for (let note of parent.childNodes) {
+        if (note.childNodes[0].classList[0] == "code-toolbar") {
+            if (note.firstChild.firstChild.childNodes[1].innerText.length == 0) {//check if the code in put is empty
+                parent.removeChild(note);
+            } 
+        }
+        else if (note.classList == "bulletPoint-list" && note.innerText.length == 0) {
+            parent.removeChild(note);
+        }
+    }
+    let note = {
+        "title": noteTitle.innerText,
+        "description": desriptionPicked,
+        "noteDetail": detail.innerHTML,
+        "_id": noteId
+    }
+
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) { 
+            Prism.highlightAll();
+            closePopUps(undefined);
+        }
+        else {
+            // showError(xhttp.responseText);
+        }
+    };
+    xhttp.open("PUT", `http://localhost:8000/languages/${language.toLowerCase()}/updateNote`, "true");
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(note));
+}
 function closePopUps(e) {
     //FIXME: might to want to clear all the input
     let classes = Object.values(noteDetail.classList);
@@ -130,15 +265,7 @@ function dropOptions() {
         dropDown.classList.remove("drop");
     }
 }
-function addNote(){
-    let noteSection = document.querySelector(".note-ul");
-    let note = document.createElement("li");
-    note.classList.add("bulletPoint-list");
-    note.innerHTML = `<p class="bullet-point"<span role="textbox" contenteditable> Add Note</span></p>`;
-    noteSection.appendChild(note);
-    editNoteBtn = document.querySelectorAll(".fa-edit");
-    editNoteBtn.forEach((btn) => btn.addEventListener("click", editNote));
-}
+
 function deleteEmptyNoteInputs() {
     console.log("I have been pressed");
     let parent = document.querySelector(".note-ul");
@@ -155,51 +282,7 @@ function deleteEmptyNoteInputs() {
         }
     }
 }
-function saveNote(event, language) {
-    let detail = document.querySelector(".note-ul");
-    let parent = document.querySelector(".note-ul");
-    for (let note of parent.childNodes) {
-        if (note.childNodes[0].classList[0] == "code-toolbar") {
-            if (note.firstChild.firstChild.childNodes[1].innerText.length == 0) {//check if the code in put is empty
-                parent.removeChild(note);
-            } 
-        }
-        else if (note.classList == "bulletPoint-list" && note.innerText.length == 0) {
-            parent.removeChild(note);
-        }
-    }
-    let note = {
-        "title": noteTitle.innerText,
-        "description": desriptionPicked,
-        "noteDetail": detail.innerHTML,
-        "_id": noteId
-    }
 
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) { 
-            Prism.highlightAll();
-            closePopUps(undefined);
-        }
-        else {
-            showError(xhttp.responseText);
-        }
-    };
-    xhttp.open("PUT", `http://localhost:8000/languages/${language.toLowerCase()}/updateNote`, "true");
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify(note));
-}
-function addCode(event, language){
-    let noteSection = document.querySelector(".note-ul");
-    console.log(languagePicked);
-    let newNote = noteSection.childNodes[1];
-    let newD = document.createElement("div");
-    newD.innerHTML = `<pre class="line-numbers">
-    <code class="language-${language}" contenteditable>Add ${languagePicked} Code</code>
-</pre>`;
-    noteSection.appendChild(newD);
-    Prism.highlightAll();
-}
 function showNotes(event, language) {
     while (notesSection.childNodes.length != 0) {
         notesSection.removeChild(notesSection.lastChild);
@@ -236,7 +319,7 @@ function showNotes(event, language) {
             }));
         }
         else {
-            showError(xhttp.responseText);
+            // showError(xhttp.responseText);
         }
     }
     xhttp.open("GET", `http://localhost:8000/languages/${languagePicked.toLowerCase()}/getNotes`, "true");
@@ -282,7 +365,8 @@ function showNoteDetail(event, language, title) { //This is the note detail pop 
             Prism.highlightAll();
         }
         else {
-            showError(xhttp.responseText);
+            console.log(xhttp.responseText);
+            // showError(xhttp.responseText);
         }
     };
     xhttp.open("POST", `http://localhost:8000/languages/${language.toLowerCase()}/getNote`, "true");
@@ -290,46 +374,7 @@ function showNoteDetail(event, language, title) { //This is the note detail pop 
     xhttp.send(JSON.stringify(note));
 
 }
-function addLanguageFunction(event) {
-    event.preventDefault();
-    console.log("I have been pressed");
-    xhttp = new XMLHttpRequest();
-    if (addLanguageInput.value.trim().length !== 0) {
-        let languageName = addLanguageInput.value.trim().toLowerCase();
-        xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) { 
-                let newLanguage = document.createElement("button");
-                newLanguage.classList.add("btn");
-                newLanguage.classList.add("lang");
-                newLanguage.classList.add(`${languageName.toLowerCase().replace(/\s/g, "")}`);
-                newLanguage.innerText = languageName.charAt(0).toUpperCase() + languageName.slice(1);
-                options.insertAdjacentElement("afterbegin", newLanguage);
 
-                //TASK: make input null and close the popUp
-                addLanguageInput.value = "";
-                overlay.classList.remove("active");
-                addLanguagePopUp.classList.add("hidden");
-                // location.reload();
-                languages = document.querySelectorAll(".lang"); //the languages buttons
-                languages.forEach((lang) => { lang.addEventListener("click", (e) => { showNotes(e, lang) }) });
-                for (let l of languages) {
-                    if (l.classList[2] == languageName)
-                        l.click();//simulate a click to show the add notes section right away
-                }
-            }
-            else {
-                showError(xhttp.responseText);
-            }
-        };
-        xhttp.open("POST", `http://localhost:8000/languages/${languageName}`, "true");
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send();
-    }
-    else { //if it is empty ***no words in the input field***
-        
-    }
-}
 function deleteLanguageFunction(event){
     event.preventDefault();
     if (deleteLanguageInput.value.trim().length !== 0) {
@@ -370,44 +415,6 @@ function lightOverlayFunction() {
     lightOverlay.style.backgroundColor = "white";
     lightOverlay.style.opacity = 0;
 }
-let okay = {}
-function createNewNote(event, language) {
-    if (newNoteTitle.value.trim() != "") {//if the title is  not empty
-        console.log(`${newNoteTitle.value}-${newNoteDescription.value}`);
-        let note = {"title": newNoteTitle.value.trim(), "description":newNoteDescription.value.trim(), "noteDetail":"", "_id":0}
-
-        //TASK: send post request to server as well
-        xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) { 
-                let div = document.createElement("div");
-                div.classList.add("note");
-                div.classList.add(`note-${notesSection.childNodes.length}`);//make sure each title is unique
-                div.innerHTML = `<div class="note-title">
-                ${newNoteTitle.value.trim()}
-            </div>
-            <div class="note-description">
-                ${newNoteDescription.value.trim()}
-            </div>`;
-                notesSection.insertAdjacentElement("beforeend", div);
-                lightOverlayFunction();//close the popUp
-                okay[language] = {};
-                okay[language]["Title"] = newNoteTitle.value;
-                okay[language]["Description"] = newNoteDescription.value;
-                notes = document.querySelectorAll(".note");
-                notes.forEach((note) => note.addEventListener("click", function (e) { showNoteDetail(e, languagePicked, note.classList[1]); }));
-                // location.reload();
-            }
-            else {
-                showError(xhttp.responseText);
-            }
-        };
-        xhttp.open("POST", `http://localhost:8000/languages/${language.toLowerCase()}/newNote`, "true");
-        xhttp.setRequestHeader('Content-Type', 'application/json');
-        console.log(note);
-        xhttp.send(JSON.stringify(note));
-    }
-}
 function deleteNote(event, language, title) {
     //TASK: send delete request to server as well
     // notesSection = document.querySelector(".notes-section");
@@ -425,7 +432,7 @@ function deleteNote(event, language, title) {
             closePopUps(undefined);
         }
         else {
-            showError(xhttp.responseText);
+            // showError(xhttp.responseText);
         }
     };
     xhttp.open("DELETE", `http://localhost:8000/languages/${language.toLowerCase()}/deleteNote`, "true");

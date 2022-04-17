@@ -263,9 +263,10 @@ li{
 .bullet-point{
     display: inline-block;
     width: 100%;
-    background-color: #7f7f7f;
+    background-color: #1d1d1d;
     outline: none;
     font-size: 2vw;
+    font-family:'Bitter', sans-serif;
 }
 .bullet-point:hover{
     cursor:text;
