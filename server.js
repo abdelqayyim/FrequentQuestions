@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
-const path = require('path');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+// const path = require('path');
+// var bodyParser = require('body-parser');
+// var cors = require('cors');
 const config = require('./Server/config.js');
 let Language = require("./Server/languageModel");
 
@@ -33,12 +33,12 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Origin');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  next();
-})
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Origin');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+//   next();
+// })
 //Mount the fridge router to the path /fridges
 //All requests starting with /fridges will be forwarded to this router
 app.use("/languages", languagesRouter);
