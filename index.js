@@ -446,4 +446,4 @@ function showError(message) {
 }
 
 //TASK: Add Pop For when when a new Note is added or when there is an error
-//Try to implement a search button too
+//TASK: FEATURE: Try to implement a search button too
