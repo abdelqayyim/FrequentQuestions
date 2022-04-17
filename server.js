@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 const config = require('./Server/config.js');
 let Language = require("./Server/languageModel");
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
+// const PORT = process.env.PORT || 8000;
 
 
 const languagesRouter = require("./Server/language-router");
