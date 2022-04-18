@@ -126,7 +126,7 @@ function addLanguageFunction(event) {
                 }
             }
             else {
-                showError(xhttp.responseText);
+                // showError(xhttp.responseText);
             }
         };
         xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${languageName}`, "true");
@@ -391,7 +391,7 @@ function deleteLanguageFunction(event){
                     location.reload();
                 }
                 else {
-                    showError(xhttp.responseText);
+                    // showError(xhttp.responseText);
                 }
             };
             xhttp.open("DELETE", ` https://frequentquestions.herokuapp.com/languages/${languageName.toLowerCase()}`, "true");
