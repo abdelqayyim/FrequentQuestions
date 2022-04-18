@@ -126,7 +126,7 @@ function addLanguageFunction(event) {
                 }
             }
             else {
-                // showError(xhttp.responseText);
+                showError(xhttp.responseText);
             }
         };
         xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${languageName}`, "true");
@@ -137,6 +137,7 @@ function addLanguageFunction(event) {
         
     }
 }
+let okay = {};
 function createNewNote(event, language) {
     if (newNoteTitle.value.trim() != "") {//if the title is  not empty
         console.log(`${newNoteTitle.value}-${newNoteDescription.value}`);
@@ -366,6 +367,7 @@ function showNoteDetail(event, language, title) { //This is the note detail pop 
         }
         else {
             console.log(xhttp.responseText);
+            // showError(xhttp.responseText);
         }
     };
     xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/getNote`, "true");
@@ -391,10 +393,11 @@ function deleteLanguageFunction(event){
                 else {
                     showError(xhttp.responseText);
                 }
-        };
-        xhttp.open("DELETE", ` https://frequentquestions.herokuapp.com/languages/${languageName.toLowerCase()}`, "true");
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send();
+            };
+            xhttp.open("DELETE", ` https://frequentquestions.herokuapp.com/languages/${languageName.toLowerCase()}`, "true");
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send();
+        }
     }
 }
 function lightOverlayFunction() {
