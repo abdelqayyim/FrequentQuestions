@@ -447,7 +447,3 @@ function showError(message) {
 
 }
 
-//TASK: Add Pop For when when a new Note is added or when there is an error
-//TASK: FEATURE: Try to implement a search button too
-
-// https://frequentquestions.herokuapp.com/
