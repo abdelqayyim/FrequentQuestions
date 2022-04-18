@@ -54,12 +54,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   //We're connected
   console.log("Connected to the database...");
-  // app.listen(PORT, ()=> {
-  //   console.log(`Server listening on http://localhost:${PORT}`)
-  //   });
-  app.listen(process.env.PORT || 8000, function(){
-    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-  });
+  app.listen(PORT, ()=> {
+    console.log(`Server listening on http://localhost:${PORT}`)
+    });
 });
 // terminates a connection to the database when the node application finishes
 process.on('SIGINT', function() {
