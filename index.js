@@ -110,7 +110,7 @@ function populateLanguages(){
                 newLanguage.classList.add("btn");
                 newLanguage.classList.add("lang");
                 newLanguage.classList.add(`${lang.name.toLowerCase().replace(/\s/g, "")}`);
-                newLanguage.innerText = lang.name.charAt(0).toUpperCase() + lang.name.slice(1);
+                newLanguage.innerText = toTitleCase(lang.name);
                 options.insertAdjacentElement("afterbegin", newLanguage);   
             }
             languages = document.querySelectorAll(".lang"); //the languages buttons
