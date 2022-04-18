@@ -126,7 +126,7 @@ function addLanguageFunction(event) {
                 }
             }
             else {
-                showError(xhttp.responseText);
+                // showError(xhttp.responseText);
             }
         };
         xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${languageName}`, "true");
@@ -169,7 +169,7 @@ function createNewNote(event, language) {
             }
             else {
                 // console.log(xhttp.responseText);
-                showError(xhttp.responseText);
+                // showError(xhttp.responseText);
             }
         };
         xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/newNote`, "true");
@@ -366,7 +366,6 @@ function showNoteDetail(event, language, title) { //This is the note detail pop 
         }
         else {
             console.log(xhttp.responseText);
-            // showError(xhttp.responseText);
         }
     };
     xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/getNote`, "true");
@@ -396,13 +395,6 @@ function deleteLanguageFunction(event){
         xhttp.open("DELETE", ` https://frequentquestions.herokuapp.com/languages/${languageName.toLowerCase()}`, "true");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
-    }
-    else { //if it is empty ***no words in the input field***
-        
-    }
-    }
-    else { //if it is empty ***no words in the input field***
-        
     }
 }
 function lightOverlayFunction() {
