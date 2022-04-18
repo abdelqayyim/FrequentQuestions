@@ -134,7 +134,8 @@ function addLanguageFunction(event) {
                 newLanguage.classList.add("btn");
                 newLanguage.classList.add("lang");
                 newLanguage.classList.add(`${languageName.toLowerCase().replace(/\s/g, "")}`);
-                newLanguage.innerText = languageName.charAt(0).toUpperCase() + languageName.slice(1);
+                newLanguage.innerText = toTitleCase(languageName);
+                // newLanguage.innerText = languageName.charAt(0).toUpperCase() + languageName.slice(1);
                 options.insertAdjacentElement("afterbegin", newLanguage);
 
                 //TASK: make input null and close the popUp
@@ -145,8 +146,10 @@ function addLanguageFunction(event) {
                 languages = document.querySelectorAll(".lang"); //the languages buttons
                 languages.forEach((lang) => { lang.addEventListener("click", (e) => { showNotes(e, lang) }) });
                 for (let l of languages) {
-                    if (l.classList[2] == languageName)
-                        l.click();//simulate a click to show the add notes section right away
+                    if (languageName == l.innerText.toLowerCase()) {
+                        l.click();//simulate a click to show the add notes section right away   
+                        break;
+                    }
                 }
             }
             else {
@@ -202,6 +205,14 @@ function createNewNote(event, language) {
         console.log(note);
         xhttp.send(JSON.stringify(note));
     }
+}
+function toTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }
+  );
 }
 function addNote(){
     let noteSection = document.querySelector(".note-ul");
@@ -275,6 +286,10 @@ function closePopUps(e) {
             }
         }
     }
+    overlay.classList.remove("active");
+    addLanguagePopUp.classList.add("hidden");
+    deleteLanguagePopUp.classList.add("hidden");
+    document.removeEventListener("click", closePopUps);
 }
 function dropOptions() {
     dropDown.classList.add("drop");
@@ -411,8 +426,18 @@ function deleteLanguageFunction(event){
             xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) { 
-                    console.log("GOT A RESPONSE");
-                    location.reload();
+                    console.log(`${languageName} HAS BEEN DELETED`);
+
+                    //THIS IS FOR THE UI, after it has been deleted from the DB, do not reload
+                    while (notesSection.childNodes.length != 0) { //remove all the notes
+                        notesSection.removeChild(notesSection.lastChild);
+                    }
+                    for (let lang of options.childNodes) {
+                        if (languageName == lang.innerText.toLowerCase()) {
+                            options.removeChild(lang);
+                            closePopUps("d");
+                        }
+                    }
                 }
                 else {
                     // showError(xhttp.responseText);
