@@ -129,7 +129,7 @@ function addLanguageFunction(event) {
                 showError(xhttp.responseText);
             }
         };
-        xhttp.open("POST", `http://localhost:8000/languages/${languageName}`, "true");
+        xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${languageName}`, "true");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
     }
@@ -172,7 +172,7 @@ function createNewNote(event, language) {
                 showError(xhttp.responseText);
             }
         };
-        xhttp.open("POST", `http://localhost:8000/languages/${language.toLowerCase()}/newNote`, "true");
+        xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/newNote`, "true");
         xhttp.setRequestHeader('Content-Type', 'application/json');
         console.log(note);
         xhttp.send(JSON.stringify(note));
@@ -228,7 +228,7 @@ function saveNote(event, language) {
             // showError(xhttp.responseText);
         }
     };
-    xhttp.open("PUT", `http://localhost:8000/languages/${language.toLowerCase()}/updateNote`, "true");
+    xhttp.open("PUT", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/updateNote`, "true");
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(note));
 }
@@ -322,7 +322,7 @@ function showNotes(event, language) {
             // showError(xhttp.responseText);
         }
     }
-    xhttp.open("GET", `http://localhost:8000/languages/${languagePicked.toLowerCase()}/getNotes`, "true");
+    xhttp.open("GET", ` https://frequentquestions.herokuapp.com/languages/${languagePicked.toLowerCase()}/getNotes`, "true");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -369,7 +369,7 @@ function showNoteDetail(event, language, title) { //This is the note detail pop 
             // showError(xhttp.responseText);
         }
     };
-    xhttp.open("POST", `http://localhost:8000/languages/${language.toLowerCase()}/getNote`, "true");
+    xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/getNote`, "true");
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(note));
 
@@ -393,7 +393,7 @@ function deleteLanguageFunction(event){
                     showError(xhttp.responseText);
                 }
         };
-        xhttp.open("DELETE", `http://localhost:8000/languages/${languageName.toLowerCase()}`, "true");
+        xhttp.open("DELETE", ` https://frequentquestions.herokuapp.com/languages/${languageName.toLowerCase()}`, "true");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
     }
@@ -435,7 +435,7 @@ function deleteNote(event, language, title) {
             // showError(xhttp.responseText);
         }
     };
-    xhttp.open("DELETE", `http://localhost:8000/languages/${language.toLowerCase()}/deleteNote`, "true");
+    xhttp.open("DELETE", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/deleteNote`, "true");
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(note));
 }
@@ -454,3 +454,5 @@ function showError(message) {
 
 //TASK: Add Pop For when when a new Note is added or when there is an error
 //TASK: FEATURE: Try to implement a search button too
+
+// https://frequentquestions.herokuapp.com/
