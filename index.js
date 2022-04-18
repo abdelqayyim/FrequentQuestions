@@ -93,7 +93,7 @@ function populateLanguages(){
             languages.forEach((lang) => { lang.addEventListener("click", (e) => { showNotes(e, lang) }) });
         }
        };
-    xhttp.open("GET", `http://localhost:8000/languages/`, "true");
+    xhttp.open("GET", `https://frequentquestions.herokuapp.com/languages/`, "true");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
