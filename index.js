@@ -31,6 +31,14 @@ dropArrow.addEventListener("click", dropOptions);
 addNoteButton.addEventListener("click", openNotePopUp);
 newNoteBtn.addEventListener("click", (e) => { createNewNote(e, languagePicked) });
 webSiteTitle.addEventListener("click", ()=>{location.reload()})
+newNoteTitle.addEventListener("keyup", (event) => {
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        newNoteBtn.click();
+      }
+})
 // ----------------------------------- PART 2 -----------------------------
 let notesSection = document.querySelector(".notes-section"); //this is the section where the notes are
 let notes = document.querySelectorAll(".note"); //the notes in the note section
@@ -67,6 +75,22 @@ let createNoteBtn = document.querySelector(".createNoteBtn");//TASK: create the 
 //           ---------- FUNCTION CALLS -----------------------
 addLanguageBtn.addEventListener("click", (e) => { addLanguageFunction(e) });
 deleteLanguageBtn.addEventListener("click", (e) => { deleteLanguageFunction(e) });
+addLanguageInput.addEventListener("keyup", (event) => {
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        addLanguageBtn.click();
+      }
+})
+deleteLanguageInput.addEventListener("keyup", (event) => {
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        deleteLanguageBtn.click();
+      }
+})
 // ----------------------------------- PART 5 -----------------------------
 let overlay = document.querySelector(".overlay");
 let lightOverlay = document.querySelector(".light-overlay");
