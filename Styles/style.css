@@ -145,6 +145,8 @@ body{
     font-size: 1.3vw;
     font-family:'Times New Roman', Times, serif;
     text-align: center;
+    height: 55%;
+    overflow-y: scroll;
 }
 .hidden{
     display: none;
@@ -216,6 +218,9 @@ body{
 .note-detail::-webkit-scrollbar{ 
     display: none;
 }.text-section::-webkit-scrollbar{ 
+    display: none;
+}
+*::-webkit-scrollbar{ 
     display: none;
 }
 .close{
@@ -393,6 +398,11 @@ li{
     outline: none;
     border: none;
     background-color: #7f7f7f;
+    overflow-y: scroll;
+    
+}
+.descriptionInput::-webkit-scrollbar{ 
+    display: none;
 }
 .create-note.hidden{
     display: none;
