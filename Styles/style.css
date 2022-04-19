@@ -329,7 +329,7 @@ li{
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    z-index: 100;
+    z-index: 140;
 }
 .delete-language.hidden{
     display: none;
@@ -435,7 +435,7 @@ li{
     align-items: center;
     justify-content: center;
     padding-top: auto;
-    z-index: 120;
+    z-index: 160;
     background-color: #eb3c3c;
     text-align: center;
     transition-timing-function: ease-out; 
@@ -445,10 +445,13 @@ li{
     display: none;
     transform: scale(0);
 }
+.error-poUp.positive{
+    background-color: rgb(17, 205, 17);
+}
 /* ---------------------------------- PART 5 ------------------------------------ */
 .overlay.active{
     position: fixed;
-    z-index: 50;
+    z-index: 10;
     opacity: 0.9;
     top: 0;
     left: 0;

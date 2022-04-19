@@ -91,9 +91,11 @@ deleteLanguageInput.addEventListener("keyup", (event) => {
         deleteLanguageBtn.click();
       }
 })
+deleteLanguagePopUp.addEventListener("click", (e)=>{console.log("I have");})
 // ----------------------------------- PART 5 -----------------------------
 let overlay = document.querySelector(".overlay");
 let lightOverlay = document.querySelector(".light-overlay");
+let errorPopUp = document.querySelector(".error-poUp");
 
 //           ---------- FUNCTION CALLS -----------------------
 lightOverlay.addEventListener("click", lightOverlayFunction);
@@ -147,13 +149,16 @@ function addLanguageFunction(event) {
                 languages.forEach((lang) => { lang.addEventListener("click", (e) => { showNotes(e, lang) }) });
                 for (let l of languages) {
                     if (languageName == l.innerText.toLowerCase()) {
-                        l.click();//simulate a click to show the add notes section right away   
+                        l.click();//simulate a click to show the add notes section right away  
+                        errorPopUp.classList.add("positive");
+                        showError("The new language/course has been successfully been created");
                         break;
                     }
                 }
             }
-            else {
-                // showError(xhttp.responseText);
+            else if (xhttp.status != 0 && xhttp.status != 200){
+                showError(xhttp.responseText);
+                console.log(xhttp.status);
             }
         };
         xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${languageName}`, "true");
@@ -195,9 +200,9 @@ function createNewNote(event, language) {
                 showNoteDetail(e, languagePicked, note.classList[1]);
             }));
             }
-            else {
-                // console.log(xhttp.responseText);
-                // showError(xhttp.responseText);
+            else if (xhttp.status != 0 && xhttp.status != 200){
+                showError(xhttp.responseText);
+                console.log(xhttp.status);
             }
         };
         xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/newNote`, "true");
@@ -258,10 +263,13 @@ function saveNote(event, language) {
     xhttp.onreadystatechange = function () {
         if (xhttp.status === 200 && xhttp.readyState === XMLHttpRequest.DONE) { 
             Prism.highlightAll();
+            errorPopUp.classList.add("positive");
+            showError("The note has been SAVED");
             closePopUps(undefined);
         }
-        else {
-            // showError(xhttp.responseText);
+        else if (xhttp.status != 0 && xhttp.status != 200){
+            showError(xhttp.responseText);
+            console.log(xhttp.status);
         }
     };
     xhttp.open("PUT", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/updateNote`, "true");
@@ -269,6 +277,7 @@ function saveNote(event, language) {
     xhttp.send(JSON.stringify(note));
 }
 function closePopUps(e) {
+    console.log("OVERLAY has been pressed");
     //FIXME: might to want to clear all the input
     let classes = Object.values(noteDetail.classList);
     if ( e != undefined && e.target == overlay) {
@@ -358,8 +367,9 @@ function showNotes(event, language) {
                 showNoteDetail(e, languagePicked, note.firstChild.innerText)
             }));
         }
-        else {
-            // showError(xhttp.responseText);
+        else if (xhttp.status != 0 && xhttp.status != 200){
+            showError(xhttp.responseText);
+            console.log(xhttp.status);
         }
     }
     xhttp.open("GET", ` https://frequentquestions.herokuapp.com/languages/${languagePicked.toLowerCase()}/getNotes`, "true");
@@ -378,14 +388,12 @@ function showAddLanguage() {
     lightOverlay.classList.remove("active");
     addLanguagePopUp.classList.remove("hidden");
     addLanguageInput.focus();
-    setTimeout(() => {document.addEventListener("click",closePopUps)},500)
 }
 function showDeleteLanguage() {
     overlay.classList.add("active");
     lightOverlay.classList.remove("active");
     deleteLanguagePopUp.classList.remove("hidden");
     deleteLanguageInput.focus();
-    setTimeout(() => {document.addEventListener("click",closePopUps)},500)
 }
 function showNoteDetail(event, language, title) { //This is the note detail pop up, to edit
     let noteSection = document.querySelector(".note-ul");
@@ -404,9 +412,10 @@ function showNoteDetail(event, language, title) { //This is the note detail pop 
             overlay.classList.add("active");
             Prism.highlightAll();
         }
-        else {
-            console.log(xhttp.responseText);
-            // showError(xhttp.responseText);
+        else if (xhttp.status != 0 && xhttp.status != 200) {
+            console.log(`The error code is ${xhttp.status}`);
+            showError(xhttp.responseText);
+            console.log(xhttp.status);
         }
     };
     xhttp.open("POST", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/getNote`, "true");
@@ -419,7 +428,6 @@ function deleteLanguageFunction(event){
     event.preventDefault();
     if (deleteLanguageInput.value.trim().length !== 0) {
         event.preventDefault();
-        console.log("I have been pressed");
         xhttp = new XMLHttpRequest();
         if (deleteLanguageInput.value.trim().length !== 0) {
             let languageName = deleteLanguageInput.value.trim().toLowerCase();
@@ -434,13 +442,17 @@ function deleteLanguageFunction(event){
                     }
                     for (let lang of options.childNodes) {
                         if (languageName == lang.innerText.toLowerCase()) {
+                            errorPopUp.classList.add("positive");
+                            showError("Language Has been Successfully Been DELETED");
                             options.removeChild(lang);
                             closePopUps("d");
+                            break;
                         }
                     }
                 }
-                else {
-                    // showError(xhttp.responseText);
+                else if (xhttp.status != 0){
+                    showError(xhttp.responseText);
+                    console.log(xhttp.status);
                 }
             };
             xhttp.open("DELETE", ` https://frequentquestions.herokuapp.com/languages/${languageName.toLowerCase()}`, "true");
@@ -462,6 +474,7 @@ function lightOverlayFunction() {
 function deleteNote(event, language, title) {
     //TASK: send delete request to server as well
     // notesSection = document.querySelector(".notes-section");
+    // let errorPopUp = document.querySelector(".error-poUp");
     let noteToDelete;
     let note = { "title": titlePicked };
 
@@ -472,11 +485,14 @@ function deleteNote(event, language, title) {
                 if (n.firstChild.innerText == titlePicked)
                     noteToDelete = n;
             }
+            errorPopUp.classList.add("positive");
+            showError("NOTE Has been Successfully Been DELETED");
             notesSection.removeChild(noteToDelete);
             closePopUps(undefined);
         }
-        else {
-            // showError(xhttp.responseText);
+        else if (xhttp.status != 0 && xhttp.status != 200){
+            showError("NOTE Has been Successfully Been DELETED");
+            console.log(xhttp.status);
         }
     };
     xhttp.open("DELETE", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/deleteNote`, "true");
@@ -485,13 +501,13 @@ function deleteNote(event, language, title) {
 }
 function showError(message) {
     console.log("Error has be made");
-    let errorPopUp = document.querySelector(".error-poUp");
+    // let errorPopUp = document.querySelector(".error-poUp");
     let erroText = document.querySelector(".error-text");
 
     erroText.innerText = message;
     errorPopUp.classList.remove("hidden");
     
-    setTimeout(() => { errorPopUp.classList.add("hidden"); }, 2000);
+    setTimeout(() => { errorPopUp.classList.add("hidden");errorPopUp.classList.remove("positive"); }, 2000);
 
 
 }
