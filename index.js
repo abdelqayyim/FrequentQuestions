@@ -188,7 +188,7 @@ function createNewNote(event, language) {
             <div class="note-description">
                 ${newNoteDescription.value.trim()}
             </div>`;
-                notesSection.insertAdjacentElement("beforeend", div);
+                notesSection.insertAdjacentElement("afterbegin", div);
                 lightOverlayFunction();//close the popUp
                 okay[language] = {};
                 okay[language]["Title"] = newNoteTitle.value;
