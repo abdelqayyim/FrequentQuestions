@@ -508,7 +508,7 @@ function showError(message) {
     errorPopUp.classList.remove("hidden");
     
     setTimeout(() => { errorPopUp.classList.add("hidden");errorPopUp.classList.remove("positive"); }, 2000);
-
-
 }
+
+//TASK: increase the popUp for messages longer
 
