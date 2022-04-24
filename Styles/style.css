@@ -268,10 +268,12 @@ li{
 .bullet-point{
     display: inline-block;
     width: 100%;
-    background-color: #1d1d1d;
+    background-color: #201f1f;
     outline: none;
-    font-size: 2vw;
-    font-family:'Bitter', sans-serif;
+    font-size: 1.3vw;
+    font-family: Rubik;
+    padding: 0.5vw;
+    border-radius: 5px;
 }
 .bullet-point:hover{
     cursor:text;
@@ -483,4 +485,7 @@ li{
 }
 code{
     outline: none;
+    font-size: 1vw !important;
+    padding-left: 0vw !important;
+    border-radius: 5px !important;
 }

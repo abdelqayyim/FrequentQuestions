@@ -5,7 +5,7 @@ let body = document.querySelector("body");
 let xhttp;
 let languagePicked; //this is a global variable that keeps track of the language the user is working on
 let titlePicked; //the selected note's title 
-let desriptionPicked; //the selected note's description
+let descriptionPicked; //the selected note's description
 let noteId;
 let notePressed;
 // ----------------------------------- PART 1 -----------------------------
@@ -196,9 +196,11 @@ function createNewNote(event, language) {
                 notes = document.querySelectorAll(".note");
                 notes.forEach((note) => note.addEventListener("click", function (e) {
                 titlePicked = note.childNodes[0].innerText;
-                desriptionPicked = note.childNodes[1].innerText;
+                descriptionPicked = note.childNodes[2].innerText;
                 showNoteDetail(e, languagePicked, note.classList[1]);
-            }));
+                }));
+                notes[0].click();
+                
             }
             else if (xhttp.status != 0 && xhttp.status != 200){
                 showError(xhttp.responseText);
@@ -254,7 +256,7 @@ function saveNote(event, language) {
     }
     let note = {
         "title": noteTitle.innerText,
-        "description": desriptionPicked,
+        "description": descriptionPicked,
         "noteDetail": detail.innerHTML,
         "_id": noteId
     }
@@ -265,13 +267,15 @@ function saveNote(event, language) {
             Prism.highlightAll();
             errorPopUp.classList.add("positive");
             showError("The note has been SAVED");
-            closePopUps(undefined);
+            // closePopUps(undefined);
         }
         else if (xhttp.status != 0 && xhttp.status != 200){
             showError(xhttp.responseText);
             console.log(xhttp.status);
         }
     };
+    console.log(`The description picked is ${descriptionPicked}`);
+    console.log(note);
     xhttp.open("PUT", ` https://frequentquestions.herokuapp.com/languages/${language.toLowerCase()}/updateNote`, "true");
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(note));
@@ -363,7 +367,7 @@ function showNotes(event, language) {
             notes = document.querySelectorAll(".note"); //the notes in the note section 
             notes.forEach((note) => note.addEventListener("click", function (e) {
                 titlePicked = note.firstChild.innerText;
-                desriptionPicked = note.lastChild.innerText;
+                descriptionPicked = note.lastChild.innerText;
                 showNoteDetail(e, languagePicked, note.firstChild.innerText)
             }));
         }
